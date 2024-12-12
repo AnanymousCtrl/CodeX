@@ -1,10 +1,8 @@
-# import textblob
-from flask import Flask, render_template
+from flask import Flask, render_template,request
 from textblob import TextBlob
 
 app = Flask(__name__)
 
-@app.route("/", method=['GET','POST'])
 def sent_ana(text):
     blob = TextBlob(text)
 
@@ -19,6 +17,14 @@ def sent_ana(text):
     
     return sent_category
 
+@app.route("/", methods=['GET','POST'])
+def index():
+    category = None
+    if request.method == 'POST':
+        text = request.form['text']
+        category = sent_ana(text)
+
+    return render_template("index.html", category=category)
 
 if __name__ == "__main__":
     app.run(debug=True)

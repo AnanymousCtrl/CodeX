@@ -5,25 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Dashboard</title>
     <style>
+        body{
+            background-color: blueviolet;
+        }
         .container{
-            background-color: antiquewhite;
-            box-shadow: 50px;
-            box-sizing: border-box;
+            background-color: rgb(186, 140, 222);
             display: flex;
             align-items: center;
         }
-        .form{
-            text-decoration: solid;
+        #ip{
+            background-attachment: fixed;
+            background-color: rgb(41, 199, 123);
+    
+        }
+        #button{
+            background-color: rgb(48, 229, 239);
+            
         }
 
     </style>
 </head>
 <body>
+    <h1 style="height: 50px; text-align: center;">Weather Reporter</h1>
     <div class="container">
         <h1>Weather Dashboard</h1>
         <form class="form" action="/" method="POST">
-            <input type="text" name="city" placeholder="Enter your City: " required>
-            <button type="submit">Get Weather Details</button>
+            <input id='ip'type="text" name="city" placeholder="Enter your City: " required>
+            <button id="button" type="submit">Get Weather Details</button>
         </form>
         
         {% if error %}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <style>
+        .container{
+            background-color: antiquewhite;
+            box-shadow: 50px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+        }
+        .form{
+            text-decoration: solid;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Dashboard</h1>
+        <form class="form" action="/" method="POST">
+            <input type="text" name="city" placeholder="Enter your City: " required>
+            <button type="submit">Get Weather Details</button>
+        </form>
+        
+        {% if error %}
+        <p class="error"> {{error}}</p>
+        {% endif %}
+
+        {%if weather %}
+        <div class=weather">
+            <h1> "Weather in {{weather.city}}, {{weather.country_name}}: </h1>
+            <p> "Temprature in {{weather.temp}}: </p>
+            <p> "Feels Like {{weather.feels_like}}: </p>
+            <p> "Humidity {{weather.humidity}}: </p>
+            <p> "Wind Speed {{weather.wind_speed}}: </p>
+            <p> "Condition {{weather.condition}}: </p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

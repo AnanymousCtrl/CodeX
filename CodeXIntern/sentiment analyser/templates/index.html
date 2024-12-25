@@ -3,28 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentimental Analyzer</title>
+    <title>Sentiment Analyzer</title>
     <style>
-        .container{
-            width: 80%;
-            margin: 40px auto;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
             text-align: center;
-            text-decoration: solid;
+            font-weight: 700;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            outline: none;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        input[type="text"]:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        button {
+            background-color: #667eea;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .category {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Dynamic category styling */
+        .category[data-sentiment="positive"] {
+            background-color: #c6f6d5;
+            color: #2f855a;
+            border: 1px solid #9ae6b4;
+        }
+
+        .category[data-sentiment="negative"] {
+            background-color: #fed7d7;
+            color: #c53030;
+            border: 1px solid #feb2b2;
+        }
+
+        .category[data-sentiment="neutral"] {
+            background-color: #e2e8f0;
+            color: #4a5568;
+            border: 1px solid #cbd5e0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            input[type="text"] {
+                min-height: 80px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Sentimental Analyzer</h1>
+        <h1>Sentiment Analyzer</h1>
         <form action="/" method="POST">
-            <input type="text" name="text" placeholder="Enter your Text: " required>
-            <button type="submit">Analyze</button>
+            <input 
+                type="text" 
+                name="text" 
+                placeholder="Enter your text here to analyze its sentiment..." 
+                required
+            >
+            <button type="submit">Analyze Sentiment</button>
         </form>
         {% if category %}
-        <div class="category">
-            {{category}}
+        <div class="category" data-sentiment="{{ category.lower() }}">
+            {{ category }}
         </div>
         {% endif %}
     </div>
+
+    <script>
+        // Add dynamic sentiment class based on the result
+        document.addEventListener('DOMContentLoaded', () => {
+            const categoryDiv = document.querySelector('.category');
+            if (categoryDiv) {
+                const sentiment = categoryDiv.textContent.trim().toLowerCase();
+                categoryDiv.setAttribute('data-sentiment', 
+                    sentiment.includes('positive') ? 'positive' : 
+                    sentiment.includes('negative') ? 'negative' : 'neutral'
+                );
+            }
+        });
+    </script>
 </body>
 </html>

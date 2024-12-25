@@ -5,43 +5,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Dashboard</title>
     <style>
-        .container{
-            display: contents;
-            align-self: center;
-        }
-        #ip{
-            background-attachment: fixed;
-            background-color: rgb(41, 199, 123);
-    
-        }
-        #button{
-            background-color: rgb(48, 229, 239);
-            
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        body {
+            background: linear-gradient(135deg, #2980b9, #6dd5fa);
+            min-height: 100vh;
+            padding: 2rem;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+        }
+
+        .form {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        #ip {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        #ip:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        #button {
+            padding: 0.8rem 1.5rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        #button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            padding: 1rem;
+            background-color: #fde8e8;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .weather {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .weather h1 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        .weather p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background-color: white;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .weather p:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .form {
+                flex-direction: column;
+            }
+
+            #button {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1 style="height: 50px; text-align: center;">Weather Reporter</h1>
     <div class="container">
         <h1>Weather Dashboard</h1>
         <form class="form" action="/" method="POST">
-            <input id='ip'type="text" name="city" placeholder="Enter your City: " required>
+            <input id="ip" type="text" name="city" placeholder="Enter your city..." required>
             <button id="button" type="submit">Get Weather Details</button>
         </form>
         
         {% if error %}
-        <p class="error"> {{error}}</p>
+        <p class="error">{{ error }}</p>
         {% endif %}
 
-        {%if weather %}
-        <div class=weather">
-            <h1> "Weather in {{weather.city}}, {{weather.country_name}}: </h1>
-            <p> "Temprature in {{weather.temp}}: </p>
-            <p> "Feels Like {{weather.feels_like}}: </p>
-            <p> "Humidity {{weather.humidity}}: </p>
-            <p> "Wind Speed {{weather.wind_speed}}: </p>
-            <p> "Condition {{weather.condition}}: </p>
+        {% if weather %}
+        <div class="weather">
+            <h1>Weather in {{ weather.city }}, {{ weather.country_name }}</h1>
+            <p>Temperature <span>{{ weather.temp }}°C</span></p>
+            <p>Feels Like <span>{{ weather.feels_like }}°C</span></p>
+            <p>Humidity <span>{{ weather.humidity }}%</span></p>
+            <p>Wind Speed <span>{{ weather.wind_speed }} km/h</span></p>
+            <p>Condition <span>{{ weather.condition }}</span></p>
         </div>
         {% endif %}
     </div>

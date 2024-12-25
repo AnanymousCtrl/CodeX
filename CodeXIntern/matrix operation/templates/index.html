@@ -6,9 +6,12 @@
     <title>Matrix Calculator</title>
     <style>
         :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --bg-gradient: linear-gradient(135deg, #a5b4fc, #818cf8);
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary: #f1f5f9;
+            --bg-gradient: linear-gradient(135deg, #2563eb, #818cf8, #60a5fa);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --shadow: rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -18,83 +21,75 @@
         }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-family: 'Poppins', sans-serif;
             min-height: 100vh;
             background: var(--bg-gradient);
-            color: #1f2937;
-            line-height: 1.5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 2rem;
+            color: #1f2937;
         }
 
         .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
+            width: 100%;
+            max-width: 850px;
+            background: var(--card-bg);
             border-radius: 16px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-                        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 10px 20px var(--shadow);
             padding: 2rem;
+            text-align: center;
         }
 
         h1 {
-            text-align: center;
             color: var(--primary);
             font-size: 2.5rem;
-            margin-bottom: 2rem;
-            font-weight: 700;
+            margin-bottom: 1.5rem;
         }
 
         .controls {
             display: flex;
-            gap: 2rem;
             justify-content: center;
-            margin-bottom: 2rem;
-            padding: 1rem;
-            background: #f8fafc;
-            border-radius: 8px;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
-        .controls label {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 500;
-        }
-
-        input[type="number"] {
-            padding: 0.5rem;
+        .controls input {
+            width: 80px;
+            padding: 0.6rem;
             border: 2px solid #e2e8f0;
-            border-radius: 6px;
-            transition: all 0.3s ease;
+            border-radius: 8px;
+            text-align: center;
             font-size: 1rem;
+            transition: border-color 0.3s;
         }
 
-        input[type="number"]:focus {
+        .controls input:focus {
             border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
         }
 
         .matrices {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             gap: 2rem;
             flex-wrap: wrap;
-            margin-bottom: 2rem;
         }
 
         .matrix {
-            background: #ffffff;
+            flex: 1;
+            min-width: 300px;
+            background: var(--secondary);
             padding: 1.5rem;
             border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px var(--shadow);
         }
 
         .matrix h3 {
-            text-align: center;
+            color: var(--primary-hover);
+            font-size: 1.25rem;
             margin-bottom: 1rem;
-            color: #4b5563;
-            font-weight: 600;
         }
 
         .matrix input {
@@ -102,86 +97,80 @@
             height: 40px;
             margin: 3px;
             text-align: center;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
             font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .matrix input:focus {
+            border-color: var(--primary);
+            outline: none;
         }
 
         .operations {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin: 2rem 0;
+            margin: 1.5rem 0;
         }
 
-        button {
+        .operations button {
             padding: 0.75rem 1.5rem;
+            background: var(--primary);
             border: none;
             border-radius: 8px;
-            background: var(--primary);
             color: white;
-            font-weight: 600;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
             font-size: 1rem;
+            transition: all 0.3s ease;
         }
 
-        button:hover {
+        .operations button:hover {
             background: var(--primary-hover);
             transform: translateY(-2px);
+            box-shadow: 0 8px 15px var(--shadow);
         }
 
         .error {
+            margin-top: 1rem;
             background: #fee2e2;
             color: #dc2626;
             padding: 1rem;
             border-radius: 8px;
-            margin: 1rem 0;
-            text-align: center;
         }
 
         .result {
-            background: #f8fafc;
+            margin-top: 2rem;
+            background: var(--secondary);
             padding: 1.5rem;
             border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.5s ease-out;
+            box-shadow: 0 4px 6px var(--shadow);
         }
 
         .result h3 {
-            text-align: center;
             margin-bottom: 1rem;
-            color: var(--primary);
-            font-weight: 600;
+            color: var(--primary-hover);
         }
 
         .result input {
-            background: white;
+            width: 60px;
+            height: 40px;
+            margin: 3px;
+            text-align: center;
             border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            background: #fff;
+            font-size: 1rem;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 640px) {
-            .container {
-                padding: 1rem;
-            }
-
-            .controls {
+        @media (max-width: 768px) {
+            .matrices {
                 flex-direction: column;
-                gap: 1rem;
+                align-items: center;
             }
 
-            .matrix input {
-                width: 50px;
-                height: 35px;
+            .matrix {
+                min-width: auto;
+                width: 100%;
             }
         }
     </style>
@@ -192,59 +181,50 @@
         
         <form method="POST">
             <div class="controls">
-                <label>
-                    Rows
-                    <input type="number" name="rows" value="{{ rows }}" min="1" max="5" onchange="this.form.submit()">
-                </label>
-                <label>
-                    Columns
-                    <input type="number" name="cols" value="{{ cols }}" min="1" max="5" onchange="this.form.submit()">
-                </label>
+                <label>Rows: <input type="number" name="rows" value="2" min="1"></label>
+                <label>Columns: <input type="number" name="cols" value="2" min="1"></label>
             </div>
-
+            
             <div class="matrices">
                 <div class="matrix">
                     <h3>Matrix 1</h3>
                     {% for i in range(rows) %}
-                        <div>
                         {% for j in range(cols) %}
-                            <input type="number" name="matrix{{i}}{{j}}" value="{{ matrix1[i][j] if matrix1 else 0 }}" step="any" required>
+                            <input type="text" name="matrix{{ i }}{{ j }}" value="0">
                         {% endfor %}
-                        </div>
+                        <br>
                     {% endfor %}
                 </div>
-
                 <div class="matrix">
                     <h3>Matrix 2</h3>
                     {% for i in range(rows) %}
-                        <div>
                         {% for j in range(cols) %}
-                            <input type="number" name="matrix{{i}}{{j}}2" value="{{ matrix2[i][j] if matrix2 else 0 }}" step="any" required>
+                            <input type="text" name="matrix{{ i }}{{ j }}2" value="0">
                         {% endfor %}
-                        </div>
+                        <br>
                     {% endfor %}
                 </div>
             </div>
-
+            
             <div class="operations">
                 <button type="submit" name="operation" value="add">Add</button>
                 <button type="submit" name="operation" value="subtract">Subtract</button>
                 <button type="submit" name="operation" value="multiply">Multiply</button>
             </div>
         </form>
-
+        
         {% if error %}
             <div class="error">{{ error }}</div>
         {% endif %}
-
+        
         {% if result %}
             <div class="result">
                 <h3>Result</h3>
                 {% for row in result %}
                     <div>
-                    {% for cell in row %}
-                        <input type="number" value="{{ cell }}" readonly>
-                    {% endfor %}
+                        {% for cell in row %}
+                            <input type="number" value="{{ cell }}" readonly>
+                        {% endfor %}
                     </div>
                 {% endfor %}
             </div>
